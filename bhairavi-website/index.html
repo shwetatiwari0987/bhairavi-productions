@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bhairavi Productions</title>
+<link rel="icon" href="assets/logo_mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maroon-deep:#3B0F1A;
+    --maroon-mid:#5C1A26;
+    --ink:#1B1210;
+    --gold:#C9982E;
+    --gold-soft:#E4C878;
+    --ivory:#F4EBDA;
+    --saffron:#D9642C;
+    --line: rgba(244,235,218,0.18);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ivory);
+    color:var(--ink);
+    font-family:'Poppins',sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;
+    letter-spacing:0.01em;
+  }
+  a{text-decoration:none;color:inherit;}
+  img{display:block;max-width:100%;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 6%;
+    background:var(--maroon-deep);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand img{
+    width:38px;height:38px;
+    border-radius:50%;
+    object-fit:cover;
+    background:#fff;
+  }
+  .brand-name{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.5rem;
+    color:var(--ivory);
+    letter-spacing:0.02em;
+  }
+  .brand-name span{color:var(--gold-soft);}
+  .nav-links{display:flex;gap:40px;}
+  .nav-links a{
+    color:var(--ivory);
+    font-size:0.92rem;
+    font-weight:400;
+    opacity:0.85;
+    transition:opacity 0.2s ease;
+  }
+  .nav-links a:hover{opacity:1;color:var(--gold-soft);}
+  .nav-cta{
+    background:var(--gold);
+    color:var(--maroon-deep);
+    padding:10px 22px;
+    border-radius:2px;
+    font-size:0.88rem;
+    font-weight:500;
+    white-space:nowrap;
+  }
+  .menu-toggle{
+    display:none;color:var(--ivory);font-size:1.5rem;
+    background:none;border:none;cursor:pointer;
+    width:40px;height:40px;flex-shrink:0;
+    align-items:center;justify-content:center;
+  }
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .mobile-menu{
+    display:flex;
+    position:fixed;
+    top:0; right:0;
+    width:78%; max-width:320px;
+    height:100vh;
+    background:var(--maroon-deep);
+    z-index:100;
+    flex-direction:column;
+    padding:26px 28px;
+    gap:2px;
+    transform:translateX(100%);
+    transition:transform 0.3s ease;
+    box-shadow:-10px 0 30px rgba(0,0,0,0.35);
+    pointer-events:none;
+  }
+  .mobile-menu.open{transform:translateX(0);pointer-events:auto;}
+  .mobile-menu-head{display:flex;justify-content:flex-end;margin-bottom:24px;}
+  .mobile-menu-close{background:none;border:none;color:var(--ivory);font-size:1.8rem;line-height:1;cursor:pointer;}
+  .mobile-menu a{
+    color:var(--ivory);
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.4rem;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .mobile-menu .nav-cta{
+    margin-top:26px;
+    text-align:center;
+  }
+  .menu-backdrop{
+    display:none;
+    position:fixed;inset:0;
+    background:rgba(0,0,0,0.5);
+    z-index:99;
+  }
+  .menu-backdrop.open{display:block;}
+
+  /* ---------- HERO (video bg) ---------- */
+  .hero{
+    position:relative;
+    color:var(--ivory);
+    padding:120px 6% 140px;
+    display:flex;
+    align-items:center;
+    min-height:640px;
+    overflow:hidden;
+  }
+  .hero video{
+    position:absolute;
+    inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    z-index:0;
+  }
+  .hero::before{
+    content:'';
+    position:absolute;inset:0;
+    background:linear-gradient(100deg, rgba(20,6,10,0.92) 0%, rgba(59,15,26,0.86) 45%, rgba(59,15,26,0.55) 100%);
+    z-index:1;
+  }
+  .hero-text{max-width:640px;position:relative;z-index:2;}
+  .hero-kicker{
+    color:var(--gold-soft);
+    font-size:0.95rem;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem,5vw,4.4rem);
+    line-height:1.08;
+    color:var(--ivory);
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--gold-soft);
+  }
+  .hero p{
+    margin-top:26px;
+    font-size:1.05rem;
+    line-height:1.7;
+    color:rgba(244,235,218,0.82);
+    max-width:480px;
+  }
+  .hero-actions{display:flex;gap:18px;margin-top:40px;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--gold);
+    color:var(--maroon-deep);
+    padding:15px 30px;
+    font-weight:500;
+    font-size:0.95rem;
+    border-radius:2px;
+    display:inline-block;
+  }
+  .btn-ghost{
+    border:1px solid rgba(244,235,218,0.5);
+    color:var(--ivory);
+    padding:15px 30px;
+    font-size:0.95rem;
+    border-radius:2px;
+    display:inline-block;
+  }
+  .hero-stats{
+    display:flex;
+    gap:50px;
+    margin-top:64px;
+    padding-top:36px;
+    border-top:1px solid var(--line);
+    max-width:480px;
+  }
+  .stat-num{font-family:'Cormorant Garamond',serif;font-size:2.1rem;color:var(--gold-soft);}
+  .stat-label{font-size:0.8rem;color:rgba(244,235,218,0.65);margin-top:4px;}
+
+  /* ---------- SECTION HEADS ---------- */
+  .section{padding:110px 6%;}
+  .section-head{
+    max-width:620px;
+    margin-bottom:56px;
+  }
+  .section-head .tag{
+    color:var(--saffron);
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:1rem;
+    margin-bottom:10px;
+  }
+  .section-head h2{
+    font-size:clamp(2rem,3.4vw,2.9rem);
+    color:var(--ink);
+    line-height:1.15;
+  }
+  .section-head p{
+    margin-top:18px;
+    color:rgba(27,18,16,0.65);
+    font-size:1rem;
+    line-height:1.7;
+    max-width:520px;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about{background:var(--ivory);}
+  .about-wrap{
+    display:flex;
+    gap:70px;
+    align-items:flex-start;
+  }
+  .about-copy{flex:1.1;}
+  .about-copy p{
+    font-size:1.02rem;
+    line-height:1.85;
+    color:rgba(27,18,16,0.72);
+    margin-bottom:20px;
+    max-width:520px;
+  }
+  .about-side{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .about-point{
+    border-left:2px solid var(--saffron);
+    padding:6px 0 6px 22px;
+  }
+  .about-point h4{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.25rem;
+    color:var(--maroon-deep);
+    margin-bottom:6px;
+  }
+  .about-point p{
+    font-size:0.9rem;
+    color:rgba(27,18,16,0.6);
+    line-height:1.6;
+  }
+
+  /* ---------- SERVICES: CARDS ---------- */
+  .services{background:#EFE4CE;}
+  .service-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:26px;
+  }
+  .service{
+    background:var(--ivory);
+    border-radius:10px;
+    padding:38px 32px;
+    box-shadow:0 14px 34px rgba(59,15,26,0.10);
+    border:1px solid rgba(59,15,26,0.06);
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .service:hover{
+    transform:translateY(-6px);
+    box-shadow:0 20px 44px rgba(59,15,26,0.16);
+  }
+  .service-icon-wrap{
+    width:56px;height:56px;
+    border-radius:50%;
+    background:var(--maroon-deep);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:26px;
+  }
+  .service-icon{width:24px;height:24px;}
+  .service h3{font-size:1.5rem;color:var(--maroon-deep);margin-bottom:12px;}
+  .service p{font-size:0.92rem;line-height:1.65;color:rgba(27,18,16,0.62);}
+  .service-list{margin-top:20px;list-style:none;}
+  .service-list li{
+    font-size:0.85rem;
+    color:rgba(27,18,16,0.6);
+    padding:9px 0;
+    border-top:1px solid rgba(27,18,16,0.1);
+  }
+  .service-list li:first-child{border-top:none;}
+
+  /* ---------- WORK ---------- */
+  .work{background:var(--ivory);}
+  .work-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+  }
+  .work-item{
+    position:relative;
+    aspect-ratio:4/5;
+    border-radius:8px;
+    overflow:hidden;
+    background:var(--maroon-mid);
+    display:flex;
+    align-items:flex-end;
+    cursor:pointer;
+  }
+  .work-item::before{
+    content:'';
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(27,18,16,0) 35%, rgba(27,18,16,0.88) 100%);
+  }
+  .work-info{position:relative;z-index:2;padding:22px;color:var(--ivory);}
+  .work-info .cat{font-size:0.72rem;color:var(--gold-soft);letter-spacing:0.04em;margin-bottom:6px;}
+  .work-info .title{font-family:'Cormorant Garamond',serif;font-size:1.35rem;}
+  .play-mark{
+    position:absolute;top:20px;right:20px;z-index:2;
+    width:34px;height:34px;border-radius:50%;
+    background:rgba(244,235,218,0.14);
+    border:1px solid rgba(244,235,218,0.5);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .play-mark svg{width:11px;height:11px;fill:var(--ivory);}
+
+  .w1{background:linear-gradient(160deg,#5C1A26,#8A2E33);}
+  .w2{background:linear-gradient(160deg,#3B0F1A,#5C1A26);}
+  .w3{background:linear-gradient(160deg,#7A3B1B,#B65A2A);}
+  .w4{background:linear-gradient(160deg,#2E2A1F,#5C1A26);}
+  .w5{background:linear-gradient(160deg,#4A1F0E,#8A2E33);}
+  .w6{background:linear-gradient(160deg,#5C1A26,#3B0F1A);}
+
+  /* ---------- PROCESS: CARDS ---------- */
+  .process{background:#EFE4CE;}
+  .process-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
+  }
+  .process-step{
+    background:var(--ivory);
+    border-radius:10px;
+    padding:32px 26px;
+    box-shadow:0 14px 34px rgba(59,15,26,0.08);
+    border:1px solid rgba(59,15,26,0.06);
+    position:relative;
+  }
+  .process-step .num{
+    width:38px;height:38px;
+    border-radius:50%;
+    background:var(--saffron);
+    color:var(--ivory);
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:1.05rem;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:20px;
+  }
+  .process-step h4{font-size:1.2rem;color:var(--maroon-deep);margin-bottom:8px;font-family:'Cormorant Garamond',serif;font-weight:600;}
+  .process-step p{font-size:0.85rem;color:rgba(27,18,16,0.6);line-height:1.6;}
+
+  /* ---------- SOCIAL STRIP ---------- */
+  .social-strip{
+    background:var(--maroon-deep);
+    color:var(--ivory);
+    padding:70px 6%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:30px;
+  }
+  .social-strip .msg{max-width:460px;}
+  .social-strip h3{font-size:1.8rem;color:var(--ivory);}
+  .social-strip p{margin-top:10px;font-size:0.92rem;color:rgba(244,235,218,0.7);}
+  .social-nums{display:flex;gap:44px;}
+  .social-nums div{text-align:center;}
+  .social-nums .n{font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--gold-soft);}
+  .social-nums .l{font-size:0.78rem;color:rgba(244,235,218,0.65);margin-top:4px;}
+  .social-note{font-size:0.72rem;color:rgba(244,235,218,0.45);margin-top:10px;}
+
+  /* ---------- CONTACT ---------- */
+  .contact{
+    background:var(--ivory);
+    display:flex;
+    gap:60px;
+  }
+  .contact-left{flex:1;}
+  .contact-right{
+    flex:1;
+    background:#EFE4CE;
+    padding:44px;
+    border-radius:10px;
+    border:1px solid rgba(27,18,16,0.08);
+  }
+  .field{margin-bottom:22px;}
+  .field label{
+    display:block;font-size:0.8rem;color:rgba(27,18,16,0.6);margin-bottom:8px;
+  }
+  .field input, .field textarea{
+    width:100%;
+    border:none;
+    border-bottom:1px solid rgba(27,18,16,0.25);
+    background:transparent;
+    padding:10px 2px;
+    font-family:'Poppins',sans-serif;
+    font-size:0.95rem;
+    color:var(--ink);
+  }
+  .field input:focus, .field textarea:focus{outline:none;border-bottom-color:var(--saffron);}
+  .send-btn{
+    background:var(--maroon-deep);
+    color:var(--ivory);
+    padding:15px 34px;
+    border:none;
+    font-size:0.92rem;
+    font-family:'Poppins',sans-serif;
+    border-radius:2px;
+    cursor:pointer;
+    margin-top:10px;
+  }
+  .contact-info{margin-top:44px;}
+  .contact-info .row{
+    display:flex;gap:16px;padding:16px 0;
+    border-top:1px solid rgba(27,18,16,0.12);
+    font-size:0.92rem;
+  }
+  .contact-info .row:first-child{border-top:none;}
+  .contact-info .k{color:rgba(27,18,16,0.5);width:90px;flex-shrink:0;}
+  .contact-info a{color:var(--maroon-deep);border-bottom:1px solid rgba(59,15,26,0.3);}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--maroon-deep);
+    color:rgba(244,235,218,0.6);
+    padding:36px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:0.82rem;
+    border-top:1px solid var(--line);
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  footer .fbrand{display:flex;align-items:center;gap:10px;color:var(--gold-soft);font-family:'Cormorant Garamond',serif;font-size:1.1rem;}
+  footer .fbrand img{width:26px;height:26px;border-radius:50%;background:#fff;}
+  .foot-social{display:flex;gap:20px;}
+  .foot-social a:hover{color:var(--gold-soft);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .nav-links{display:none;}
+    .menu-toggle{display:flex;}
+    .hero{padding-top:60px;text-align:left;min-height:520px;}
+    .hero-stats{gap:34px;flex-wrap:wrap;}
+    .about-wrap{flex-direction:column;gap:40px;}
+    .service-grid{grid-template-columns:1fr;}
+    .work-grid{grid-template-columns:repeat(2,1fr);}
+    .process-row{grid-template-columns:repeat(2,1fr);}
+    .contact{flex-direction:column;}
+    .social-strip{flex-direction:column;align-items:flex-start;}
+  }
+  @media (max-width:640px){
+    nav{padding:14px 5%;}
+    .brand-name{font-size:1.25rem;}
+    .brand img{width:32px;height:32px;}
+    .nav-cta{display:none;}
+    .mobile-menu .nav-cta{display:block;}
+
+    .hero{padding:90px 6% 60px;min-height:auto;}
+    .hero video{height:100%;}
+    .hero h1{font-size:2.1rem;}
+    .hero p{font-size:0.95rem;max-width:100%;}
+    .hero-actions{gap:12px;}
+    .btn-primary,.btn-ghost{padding:13px 22px;font-size:0.88rem;flex:1;text-align:center;}
+    .hero-stats{gap:22px;margin-top:44px;padding-top:26px;}
+    .stat-num{font-size:1.6rem;}
+    .stat-label{font-size:0.72rem;}
+
+    .section{padding:56px 6%;}
+    .section-head{margin-bottom:36px;}
+    .section-head h2{font-size:1.7rem;}
+    .section-head p{font-size:0.92rem;}
+
+    .about-copy p{font-size:0.94rem;max-width:100%;}
+    .about-side{gap:20px;}
+
+    .service{padding:28px 24px;}
+    .service h3{font-size:1.3rem;}
+
+    .work-grid{grid-template-columns:1fr 1fr;gap:12px;}
+    .work-info{padding:14px;}
+    .work-info .title{font-size:1.05rem;}
+    .play-mark{width:28px;height:28px;top:12px;right:12px;}
+
+    .process-row{grid-template-columns:1fr;gap:16px;}
+    .process-step{padding:26px 22px;}
+
+    .social-strip{padding:50px 6%;gap:26px;}
+    .social-strip h3{font-size:1.4rem;}
+    .social-nums{gap:30px;width:100%;justify-content:space-between;}
+    .social-nums .n{font-size:1.7rem;}
+
+    .contact{gap:36px;}
+    .contact-right{padding:28px 22px;}
+  }
+  @media (max-width:380px){
+    .hero h1{font-size:1.8rem;}
+    .work-grid{grid-template-columns:1fr;}
+    .social-nums{gap:18px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">
+    <img src="assets/logo_mark.png" alt="Bhairavi Productions logo">
+    <div class="brand-name">Bhairavi <span>Productions</span></div>
+  </div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#work">Our Work</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <a href="#contact" class="nav-cta">Start a project</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu">&#9776;</button>
+  </div>
+</nav>
+
+<div class="menu-backdrop" id="menuBackdrop"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-head">
+    <button class="mobile-menu-close" id="menuClose" aria-label="Close menu">&times;</button>
+  </div>
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#work">Our Work</a>
+  <a href="#process">Process</a>
+  <a href="#contact">Contact</a>
+  <a href="#contact" class="nav-cta">Start a project</a>
+</div>
+
+<section class="hero">
+  <video autoplay muted loop playsinline poster="assets/logo_mark.png">
+    <source src="assets/hero-bg.mp4" type="video/mp4">
+  </video>
+  <div class="hero-text">
+    <div class="hero-kicker">Video &amp; Music Production House</div>
+    <h1>We shape <em>devotion</em><br>into sound and frame.</h1>
+    <p>Bhairavi Productions creates music videos, devotional films and original bhajans — built for the screen, made to be felt.</p>
+    <div class="hero-actions">
+      <a href="#work" class="btn-primary">Watch our work</a>
+      <a href="#contact" class="btn-ghost">Get in touch</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">40+</div>
+        <div class="stat-label">Productions released</div>
+      </div>
+      <div>
+        <div class="stat-num">427+</div>
+        <div class="stat-label">Community on Instagram</div>
+      </div>
+      <div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">Core crafts — video &amp; music</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section about" id="about">
+  <div class="section-head">
+    <div class="tag">Who we are</div>
+    <h2>About Bhairavi Productions</h2>
+  </div>
+  <div class="about-wrap">
+    <div class="about-copy">
+      <p>Bhairavi Productions started with a simple idea — devotion deserves the same craft as any big-budget film. We bring cinematic direction, sound design and music production together, so every bhajan and every festival film feels as good as it looks.</p>
+      <p>Our work lives first on Instagram, where festival specials, studio sessions and new releases reach a growing community — built one honest production at a time, not on paid promotion.</p>
+    </div>
+    <div class="about-side">
+      <div class="about-point">
+        <h4>What we believe</h4>
+        <p>Sound and picture should be planned together from day one, not fixed separately in post.</p>
+      </div>
+      <div class="about-point">
+        <h4>How we work</h4>
+        <p>Small, hands-on crew — direction, recording and editing stay in-house from brief to release.</p>
+      </div>
+      <div class="about-point">
+        <h4>Who we work with</h4>
+        <p>Artists, temples and event organisers who want devotional content made with real production value.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section services" id="services">
+  <div class="section-head">
+    <div class="tag">What we do</div>
+    <h2>Two crafts, one story</h2>
+    <p>Every project moves between the camera and the studio — we handle both, so the sound and the image are built together, not stitched apart.</p>
+  </div>
+  <div class="service-grid">
+    <div class="service">
+      <div class="service-icon-wrap">
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none"><path d="M14 5H4a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2z" stroke="#E4C878" stroke-width="1.6"/><path d="M16 9l6-3v12l-6-3" stroke="#E4C878" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>Video Production</h3>
+      <p>From concept to final cut — music videos, devotional shorts and festival films shot and edited end to end.</p>
+      <ul class="service-list">
+        <li>Music video direction &amp; shoot</li>
+        <li>Devotional &amp; festival films</li>
+        <li>Colour grading and edit</li>
+      </ul>
+    </div>
+    <div class="service">
+      <div class="service-icon-wrap">
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="#E4C878" stroke-width="1.6" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" stroke="#E4C878" stroke-width="1.6"/><circle cx="18" cy="16" r="3" stroke="#E4C878" stroke-width="1.6"/></svg>
+      </div>
+      <h3>Music Production</h3>
+      <p>Original bhajans and songs — composed, recorded and mixed in-house with vocalists and session musicians.</p>
+      <ul class="service-list">
+        <li>Composition &amp; arrangement</li>
+        <li>Studio recording</li>
+        <li>Mixing &amp; mastering</li>
+      </ul>
+    </div>
+    <div class="service">
+      <div class="service-icon-wrap">
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5L12 3z" stroke="#E4C878" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>Devotional Content</h3>
+      <p>Festival specials and spiritual storytelling made for social platforms, temples and events.</p>
+      <ul class="service-list">
+        <li>Janmashtami &amp; festival specials</li>
+        <li>Reels &amp; social-first cuts</li>
+        <li>Event &amp; live coverage</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section work" id="work">
+  <div class="section-head">
+    <div class="tag">Selected work</div>
+    <h2>Recent releases</h2>
+    <p>A few productions from the last few months — full versions live on our Instagram and YouTube.</p>
+  </div>
+  <div class="work-grid">
+    <div class="work-item w1">
+      <div class="play-mark"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+      <div class="work-info"><div class="cat">Festival Film</div><div class="title">Krishna Janmashtami</div></div>
+    </div>
+    <div class="work-item w2">
+      <div class="play-mark"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+      <div class="work-info"><div class="cat">Music Video</div><div class="title">Yashomati Nandan</div></div>
+    </div>
+    <div class="work-item w3">
+      <div class="play-mark"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+      <div class="work-info"><div class="cat">Behind the Scenes</div><div class="title">4:30 AM Studio Session</div></div>
+    </div>
+    <div class="work-item w4">
+      <div class="play-mark"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+      <div class="work-info"><div class="cat">Music Video</div><div class="title">Radha Kyun Gori</div></div>
+    </div>
+    <div class="work-item w5">
+      <div class="play-mark"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+      <div class="work-info"><div class="cat">Devotional Short</div><div class="title">Studio Recording Diaries</div></div>
+    </div>
+    <div class="work-item w6">
+      <div class="play-mark"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+      <div class="work-info"><div class="cat">Festival Film</div><div class="title">Radha Rani Special</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section process" id="process">
+  <div class="section-head">
+    <div class="tag">How a project runs</div>
+    <h2>From idea to release</h2>
+  </div>
+  <div class="process-row">
+    <div class="process-step">
+      <div class="num">1</div>
+      <h4>Brief</h4>
+      <p>We understand the occasion, the song and who it's for.</p>
+    </div>
+    <div class="process-step">
+      <div class="num">2</div>
+      <h4>Shoot / Record</h4>
+      <p>On-location filming or studio recording with our crew.</p>
+    </div>
+    <div class="process-step">
+      <div class="num">3</div>
+      <h4>Edit &amp; Mix</h4>
+      <p>Colour, cut and sound are finished together in-house.</p>
+    </div>
+    <div class="process-step">
+      <div class="num">4</div>
+      <h4>Release</h4>
+      <p>Delivered for YouTube, Instagram and event screening.</p>
+    </div>
+  </div>
+</section>
+
+<section class="social-strip">
+  <div class="msg">
+    <h3>Followed for what we make, not what we say.</h3>
+    <p>Our releases live first on Instagram — festival specials, studio sessions and new bhajans as they're finished.</p>
+    <div class="social-note">Numbers update manually for now — ask us about a live Instagram widget if you'd like these to auto-refresh.</div>
+  </div>
+  <div class="social-nums">
+    <div><div class="n">40</div><div class="l">posts</div></div>
+    <div><div class="n">427</div><div class="l">followers</div></div>
+    <div><div class="n">24</div><div class="l">following</div></div>
+  </div>
+</section>
+
+<section class="section contact" id="contact">
+  <div class="contact-left">
+    <div class="section-head">
+      <div class="tag">Start a project</div>
+      <h2>Tell us what you're making</h2>
+      <p>Music video, devotional film or a festival special — send us a few details and we'll get back with a plan and quote.</p>
+    </div>
+    <div class="contact-info">
+      <div class="row"><div class="k">Instagram</div><a href="https://www.instagram.com/bhairaviproductions/" target="_blank">@bhairaviproductions</a></div>
+      <div class="row"><div class="k">Facebook</div><a href="#" target="_blank">Bhairavi Productions</a></div>
+      <div class="row"><div class="k">Focus</div><div>Video production &amp; music</div></div>
+    </div>
+  </div>
+  <div class="contact-right">
+    <div class="field">
+      <label>Name</label>
+      <input type="text" placeholder="Your name">
+    </div>
+    <div class="field">
+      <label>Phone / Email</label>
+      <input type="text" placeholder="How we reach you">
+    </div>
+    <div class="field">
+      <label>Tell us about the project</label>
+      <textarea rows="4" placeholder="Song, occasion, timeline..."></textarea>
+    </div>
+    <button class="send-btn">Send enquiry</button>
+  </div>
+</section>
+
+<footer>
+  <div class="fbrand"><img src="assets/logo_mark.png" alt="logo">Bhairavi Productions</div>
+  <div>&copy; 2026 Bhairavi Productions. All rights reserved.</div>
+  <div class="foot-social">
+    <a href="https://www.instagram.com/bhairaviproductions/" target="_blank">Instagram</a>
+    <a href="#" target="_blank">Facebook</a>
+  </div>
+</footer>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const menuClose = document.getElementById('menuClose');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const menuBackdrop = document.getElementById('menuBackdrop');
+
+  function openMenu(){
+    mobileMenu.classList.add('open');
+    menuBackdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu(){
+    mobileMenu.classList.remove('open');
+    menuBackdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  menuToggle.addEventListener('click', openMenu);
+  menuClose.addEventListener('click', closeMenu);
+  menuBackdrop.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+</script>
+
+</body>
+</html>
